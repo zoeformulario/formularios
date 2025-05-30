@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>RC - AÇÃO AJUIZADA</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            font-size: 13px;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        textarea, select, input[type="text"], input[type="date"], #output {
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Calibri, sans-serif;
+            font-size: 13px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #output {
+            white-space: pre-line;
+            margin-top: 30px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>RC - AÇÃO AJUIZADA</h2>
+
+        <label for="nome">Nome:</label>
+        <select id="nome">
+            <option value="" disabled selected>Selecione um nome</option>
+            <option value="Cintia Miranda">Cintia Miranda</option>
+            <option value="Vitor Velardo">Vitor Velardo</option>
+            <option value="Ester Klajman">Ester Klajman</option>
+            <option value="Rayanne Freitas">Rayanne Freitas</option>
+        </select>
+
+        <label for="dataProtocolo">Data do protocolo da inicial:</label>
+        <input type="date" id="dataProtocolo">
+
+        <label for="tipoAcao">Tipo de ação:</label>
+<select id="tipoAcao" onchange="mostrarCampoOutro()">
+  <option value="Ação de Busca e Apreensão">Ação de Busca e Apreensão</option>
+  <option value="Ação de Reintegração de Posse">Ação de Reintegração de Posse</option>
+  <option value="Ação Monitória">Ação Monitória</option>
+  <option value="Ação de Cobrança">Ação de Cobrança</option>
+  <option value="Execução de Título Extrajudicial">Execução de Título Extrajudicial</option>
+  <option value="Outro">Outro (especificar)</option>
+</select>
+<input type="text" id="tipoAcaoOutro" placeholder="Especifique o tipo de ação" style="display:none; margin-top: 10px;">
+
+        <label for="comarca">Comarca:</label>
+        <input type="text" id="comarca">
+
+        <label for="vara">Vara:</label>
+        <input type="text" id="vara">
+
+        <label for="uf">UF:</label>
+        <input type="text" id="uf" value="RJ">
+
+        <label for="numeroProcesso">Número do processo (modelo CNJ):</label>
+        <input type="text" id="numeroProcesso">
+
+        <label for="valorCausa">Valor da causa:</label>
+        <input type="text" id="valorCausa">
+
+        <label for="garantias">Garantias:</label>
+        <input type="text" id="garantias">
+
+        <label for="avalistas">Avalistas (Nomes e CPF/CNPJ):</label>
+        <textarea id="avalistas" rows="2"></textarea>
+
+        <label for="dadosBancarios">Agência/ Conta/ Carteira/ Contrato:</label>
+        <input type="text" id="dadosBancarios">
+
+        <button onclick="gerarTexto()">Gerar Texto</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function formatarDataExtenso(dataISO) {
+            const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+            const data = new Date(dataISO + 'T00:00:00');
+            const dia = data.getDate();
+            const mes = meses[data.getMonth()];
+            const ano = data.getFullYear();
+            return `${dia} de ${mes} de ${ano}`;
+        }
+
+        
+        function mostrarCampoOutro() {
+            const tipo = document.getElementById("tipoAcao").value;
+            const outro = document.getElementById("tipoAcaoOutro");
+            outro.style.display = tipo === "Outro" ? "block" : "none";
+        }
+
+        function gerarTexto() {
+            const nome = document.getElementById("nome").value;
+            const dataProtocolo = document.getElementById("dataProtocolo").value;
+            const dataExtenso = dataProtocolo ? formatarDataExtenso(dataProtocolo) : "[DATA]";
+            let tipoAcao = document.getElementById("tipoAcao").value;
+            const outroAcao = document.getElementById("tipoAcaoOutro").value.trim();
+            if (tipoAcao === "Outro") { tipoAcao = outroAcao || "Outro"; }
+            const comarca = document.getElementById("comarca").value.trim();
+            const vara = document.getElementById("vara").value.trim();
+            const uf = document.getElementById("uf").value.trim();
+            const numeroProcesso = document.getElementById("numeroProcesso").value.trim();
+            const valorCausa = document.getElementById("valorCausa").value.trim();
+            const garantias = document.getElementById("garantias").value.trim();
+            const avalistas = document.getElementById("avalistas").value.trim();
+            const dadosBancarios = document.getElementById("dadosBancarios").value.trim();
+            const hora = new Date().getHours();
+            const saudacao = hora < 12 ? "dia" : "tarde";
+
+            const textoFinal = `Prezados, boa ${saudacao}.
+
+Segue a presente referência para noticiar o ajuizamento da ação:
+
+1. Data do protocolo da inicial (distribuição da ação): ${dataExtenso}
+
+2. Tipo de ação: ${tipoAcao}
+
+3. Comarca: ${comarca}
+
+4. Vara: ${vara}
+
+5. UF: ${uf}
+
+6. Número do processo (modelo CNJ): ${numeroProcesso}
+
+7. Valor da causa: ${valorCausa}
+
+8. Garantias: ${garantias}
+
+9. Avalistas (Nomes e CPF/CNPJ): ${avalistas}
+
+10. Agência/ Conta/ Carteira/ Contrato: ${dadosBancarios}
+
+Obrigado(a).
+
+${nome} - Klajman Advogados.`;
+
+            document.getElementById("output").textContent = textoFinal;
+        }
+    </script>
+</body>
+</html>
