@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>RC - INVIABILIDADE ECONÔMICA DO VEÍCULO</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            font-size: 13px;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        textarea, select, input[type="text"], #output {
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Calibri, sans-serif;
+            font-size: 13px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #output {
+            white-space: pre-line;
+            margin-top: 30px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>RC - INVIABILIDADE ECONÔMICA DO VEÍCULO</h2>
+
+        <label for="nome">Nome:</label>
+        <select id="nome">
+            <option value="" disabled selected>Selecione um nome</option>
+            <option value="Cintia Miranda">Cintia Miranda</option>
+            <option value="Vitor Velardo">Vitor Velardo</option>
+            <option value="Ester Klajman">Ester Klajman</option>
+            <option value="Rayanne Freitas">Rayanne Freitas</option>
+        </select>
+
+        <label for="caracteristicas">Características do bem:</label>
+        <textarea id="caracteristicas" rows="2"></textarea>
+
+        <label for="hipotese">Hipótese que inviabiliza a apreensão:</label>
+        <textarea id="hipotese" rows="2">Valor elevado dos débitos junto aos órgãos de trânsito.</textarea>
+
+        <label for="contrato">Dados e valor do contrato:</label>
+        <input type="text" id="contrato" placeholder="Ex: Contrato nº 5488605, celebrado em 04/01/2021, no valor de R$ 43.800,00">
+
+        <label for="valorMercado">Valor de mercado (FIPE/MOLICAR):</label>
+        <input type="text" id="valorMercado" placeholder="Ex: R$ 61.544,00">
+
+        <label for="estado">Estado de conservação (com foto):</label>
+        <input type="text" id="estado" placeholder="Ex: Sem informação">
+
+        <label for="valorDebitos">Valor dos débitos existentes:</label>
+        <input type="text" id="valorDebitos" placeholder="Ex: R$ 16.381,61">
+
+        <label for="custas">Valor das custas:</label>
+        <input type="text" id="custas" placeholder="Ex: Não aplicável">
+
+        <label for="despesas">Valores de despesas com estadia e remoção:</label>
+        <input type="text" id="despesas" placeholder="Ex: Não aplicável">
+
+        <label for="penhora">Penhora do bem em processo de terceiros:</label>
+        <input type="text" id="penhora" placeholder="Ex: Não aplicável">
+
+        <button onclick="gerarTexto()">Gerar Texto</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function gerarTexto() {
+            const nome = document.getElementById("nome").value;
+            const caracteristicas = document.getElementById("caracteristicas").value.trim();
+            const hipotese = document.getElementById("hipotese").value.trim();
+            const contrato = document.getElementById("contrato").value.trim();
+            const valorMercado = document.getElementById("valorMercado").value.trim();
+            const estado = document.getElementById("estado").value.trim();
+            const valorDebitos = document.getElementById("valorDebitos").value.trim();
+            const custas = document.getElementById("custas").value.trim();
+            const despesas = document.getElementById("despesas").value.trim();
+            const penhora = document.getElementById("penhora").value.trim();
+
+            const textoFinal = `Prezados, boa tarde!
+
+Diante da inviabilidade econômica do veículo, segue a presente RC:
+
+1. Características do bem: ${caracteristicas}
+
+2. Descrever a hipótese que inviabiliza a apreensão do bem: ${hipotese}
+
+3. Dados e valor do contrato: ${contrato}
+
+4. Valor de mercado (FIPE/MOLICAR): ${valorMercado}
+
+5. Estado de conservação (com foto): ${estado}
+
+6. Valor dos débitos existentes: ${valorDebitos}
+
+7. Valor das custas: ${custas}
+
+8. Valores de despesas com estadia e remoção: ${despesas}
+
+9. Informar a existência de penhora do bem em processo de terceiros: ${penhora}
+
+Em anexo, seguem os detalhes e cálculos.
+
+Obrigado(a).
+
+${nome} - Klajman Advogados.`;
+
+            document.getElementById("output").textContent = textoFinal;
+        }
+    </script>
+</body>
+</html>
