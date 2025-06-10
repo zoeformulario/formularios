@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>Análise Processual Preventiva</title>
+<style>
+    body { font-family: Calibri, sans-serif; background: #f9f9f9; display: flex; justify-content: center; }
+    .container {
+  margin-top: 10px !important; width: 90%; max-width: 900px; margin: 30px; }
+    h1 { text-align: center; color: #2a2a2a; font-size: 24px; margin-bottom: 10px; }
+    h2 { background: #dedede; padding: 10px; border-radius: 6px; font-size: 18px; }
+    .section { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 0 5px #ccc; transition: background-color 0.3s, border 0.3s; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: start; }
+    label { font-weight: bold; margin-top: 10px; }
+    input, select, textarea { width: 100%; padding: 6px; margin-top: 5px; font-family: Calibri, sans-serif; }
+
+    .toggle-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .toggle-btn {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      background-color: #f1f1f1;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      user-select: none;
+    }
+
+    .toggle-btn.selected {
+      background-color: #007BFF;
+      color: #fff;
+      border-color: #0056b3;
+    }
+
+    #outros-input {
+      margin-top: 10px;
+      display: none;
+    }
+
+    #outros-input input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 5px;
+    }
+
+    .print-button {
+      margin-right: 10px;
+    }
+    .btn-form {
+  width: 200px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+.btn-form.azul {
+  background-color: #007BFF;
+  color: white;
+}
+.btn-form.preto {
+  background-color: #000;
+  color: white;
+}
+.btn-form.same-size {
+  width: 200px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-form.azul {
+  background-color: #007BFF;
+  color: white;
+}
+.btn-form.vermelho {
+  background-color: #dc3545;
+  color: white;
+}
+.btn-form.preto {
+  background-color: #000;
+  color: white;
+}
+  width: 200px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-form.vermelho {
+  background-color: #dc3545;
+  color: white;
+}
+
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      display: block;
+      margin: 30px auto;
+    }
+
+    .remove-button {
+      background-color: #000;
+      color: white;
+      margin-left: 10px;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .highlight-red {
+      background-color: #ffd6d6 !important;
+      border: 1px solid red !important;
+    }
+  
+    .hidden { display: none; }
+    
+.btn-form.same-size {
+  width: 200px !important;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-form.azul {
+  background-color: #007BFF !important;
+  color: white !important;
+}
+.btn-form.vermelho {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+.btn-form.preto {
+  background-color: #000 !important;
+  color: white !important;
+}
+
+.btn-form.same-size {
+  width: 200px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-form.azul {
+  background-color: #007BFF !important;
+  color: white !important;
+}
+.btn-form.vermelho {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+.btn-form.preto {
+  background-color: #000 !important;
+  color: white !important;
+}
+</style>
+<script>
+    function toggleButton(btn) {
+      btn.classList.toggle("selected");
+      if (btn.innerText.trim() === "Outros") {
+        const inputDiv = document.getElementById("outros-input");
+        inputDiv.style.display = btn.classList.contains("selected") ? "block" : "none";
+      }
+    }
+
+    function alterarCorPesquisa(select) {
+      const section = document.getElementById("divPesquisaBens");
+      if (select.value === "Não") {
+        section.classList.add("highlight-red");
+      } else {
+        section.classList.remove("highlight-red");
+      }
+    }
+
+    function adicionarProcesso() {
+      const container = document.getElementById('processosAdicionados');
+      const grupo = document.createElement('div');
+      grupo.className = "form-grid grupo-processo";
+      grupo.innerHTML = `
+        <div><label>GCPJ:</label><input type="text"></div>
+        <div><label>PROCESSO:</label><input type="text"></div>
+        <div><label>SITUAÇÃO:</label><input type="text"></div>
+        <div><label>ESCRITÓRIO:</label><input type="text"></div>
+        <div style="grid-column: span 2;"><button type="button" class="remove-button" onclick="removerProcesso(this)">Remover</button><hr></div>`;
+      container.appendChild(grupo);
+    }
+
+    function removerProcesso(btn) {
+      const grupo = btn.closest('.grupo-processo');
+      grupo.remove();
+    }
+
+    function toggleCampo(select, targetId) {
+      const input = document.getElementById(targetId);
+      if (select.value === "Não") {
+        input.classList.remove("hidden");
+      } else {
+        input.classList.add("hidden");
+      }
+    }
+
+    function resetFormulario() {
+      if (confirm('Tem certeza de que deseja limpar todos os campos?')) {
+        location.reload();
+      }
+    }
+
+    function imprimirFormulario() {
+      window.print();
+    }
+
+    window.onload = function() {
+      const now = new Date();
+      const data = now.toLocaleDateString('pt-BR');
+      
+      document.getElementById('dataHora').value = data;
+    };
+  
+function toggleCampoCondicional(select, targetId, expectedValue) {
+  const input = document.getElementById(targetId);
+  if (select.value === expectedValue) {
+    input.classList.remove("hidden");
+  } else {
+    input.classList.add("hidden");
+  }
+}
+</script>
+<style>
+  .image-paste-area {
+    border: 2px dashed #999;
+    padding: 20px;
+    min-height: 150px;
+    text-align: center;
+    background: #fdfdfd;
+    margin-top: 10px;
+  }
+  .image-paste-area img {
+    max-width: 100%;
+    margin-top: 10px;
+  }
+</style>
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    const pasteArea = document.getElementById('paste-area');
+    if (pasteArea) {
+      pasteArea.addEventListener('paste', function (e) {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type.indexOf('image') !== -1) {
+            const blob = items[i].getAsFile();
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              const img = document.createElement('img');
+              img.src = event.target.result;
+              pasteArea.innerHTML = '<p><strong>Imagem colada:</strong></p>';
+              pasteArea.appendChild(img);
+            };
+            reader.readAsDataURL(blob);
+          }
+        }
+      });
+    }
+  });
+</script>
+</head>
+<body>
+<div class="container">
+<h1>Análise Processual Preventiva</h1>
+<div class="section">
+<h2>RESPONSÁVEL E DATA</h2>
+<div class="form-grid" id="gridContrato">
+<div>
+<label>Responsável pelo Relatório:</label>
+<select>
+<option value="">Selecione</option>
+<option>Vitor</option>
+<option>Ester</option>
+<option>Cintia</option>
+<option>Rayanne</option>
+</select>
+</div>
+<div>
+<label>Data:</label>
+<input id="dataHora" readonly="" type="text"/>
+</div>
+</div>
+</div>
+<div class="section">
+<h2>INFORMAÇÕES BÁSICAS</h2>
+<div class="form-grid" id="gridContrato">
+<div><label>GCPJ:</label><input type="text"/></div>
+<div><label>PROCESSO:</label><input type="text"/></div>
+</div>
+</div>
+<div class="section">
+<h2>INFORMAÇÕES PARA AJUIZAMENTO</h2>
+<label>Documentos Fornecidos:</label>
+<div class="toggle-group">
+<div class="toggle-btn" onclick="toggleButton(this)">Contrato assinado</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Contrato assinado eletronicamente</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Ficha cadastral</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Proposta de abertura da conta</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Cartão de assinaturas</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Extrato da conta</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Tela EMPF</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Tela LPCL</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Tela RESG</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Planilha de cálculo</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Notificação</div>
+<div class="toggle-btn" onclick="toggleButton(this)">Outros</div>
+</div>
+<div id="outros-input">
+<label>Descreva os documentos adicionais:</label>
+<input placeholder="Especificar documentos não listados acima" type="text"/>
+</div>
+</div>
+<div class="section">
+<h2>INFORMAÇÕES DO CONTRATO</h2>
+<div class="form-grid" id="gridContrato">
+<div><label>CONTRATO:</label><input type="text"/></div>
+<div><label>CARTEIRA:</label><input type="text"/></div>
+<div><label>CONTA:</label><input type="text"/></div>
+<div><label>AGÊNCIA:</label><input type="text"/></div>
+</div>
+<div class="form-grid" id="gridContrato">
+<div>
+<label>Contrato possui garantia?</label>
+<select onchange="toggleCampoCondicional(this, 'campoGarantia', 'Contrato COM garantia')">
+<option value="">Selecione</option>
+<option>Contrato SEM garantia</option>
+<option>Contrato COM garantia</option>
+</select>
+</div>
+<div><div class="hidden" id="campoGarantia"><label>Qual é a garantia?</label><input type="text"/></div></div>
+<div>
+<label>Contrato possui avalista?</label>
+<select onchange="toggleCampoCondicional(this, 'campoAvalista', 'Contrato COM avalista')">
+<option value="">Selecione</option>
+<option>Contrato SEM avalista</option>
+<option>Contrato COM avalista</option>
+</select>
+</div>
+<div><div class="hidden" id="campoAvalista"><label>Nome e CPF do Avalista</label><input type="text"/></div></div>
+</div>
+</div>
+<div class="section">
+<h2>INFORMAÇÕES DO PROCESSO</h2>
+<div class="form-grid">
+  <div>
+    <label>Tipo de ação:</label>
+    <select>
+      <option value="">Selecione</option>
+      <option>Ação de Busca e Apreensão</option>
+      <option>Ação de Reintegração de Posse</option>
+      <option>Ação Monitória</option>
+      <option>Ação de Cobrança</option>
+      <option>Execução de Título Extrajudicial</option>
+      <option>Outros</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Valor da Causa:</label>
+    <input type="text" placeholder="Digite o valor da causa"/>
+  </div>
+
+  <div style="grid-column: span 2;">
+    <label>Ação relevante?</label>
+    <select>
+      <option value="">Selecione</option>
+      <option>Sim, relevante por conta da matéria</option>
+      <option>Sim, relevante por conta do valor</option>
+      <option>Sim, outros</option>
+      <option>Não</option>
+    </select>
+  </div>
+
+<div>
+<label>O contrato foi juntado nos autos?</label>
+<select onchange="toggleCampoCondicional(this, 'motivoContratoNaoJuntado', 'Não')">
+<option value="">Selecione</option>
+<option>Sim</option>
+<option>Não</option>
+</select>
+</div>
+<div class="hidden" id="motivoContratoNaoJuntado">
+<label>Motivo:</label>
+<input placeholder="Explique por que o contrato não foi juntado" type="text"/>
+</div>
+<div>
+<label>O extrato foi juntado nos autos?</label>
+<select onchange="toggleCampoCondicional(this, 'motivoExtratoNaoJuntado', 'Não')">
+<option value="">Selecione</option>
+<option>Sim</option>
+<option>Não</option>
+</select>
+</div>
+<div class="hidden" id="motivoExtratoNaoJuntado">
+<label>Motivo:</label>
+<input placeholder="Explique por que o extrato não foi juntado" type="text"/>
+</div>
+<div>
+<label>Avalista incluído no polo?</label>
+<select onchange="toggleCampo(this, 'motivoAvalistaNaoIncluido')">
+<option value="">Selecione</option>
+<option>Sim</option>
+<option>Não</option>
+</select>
+</div>
+<div class="hidden" id="motivoAvalistaNaoIncluido">
+<label>Motivo:</label>
+<input placeholder="Explique por que o avalista não foi incluído" type="text"/>
+</div>
+<div style="grid-column: span 2;">
+<label>Cliente citado:</label>
+<input placeholder="Descreva a situação da citação do cliente" type="text"/>
+</div>
+</div>
+</div>
+<div class="section" id="divPesquisaBens">
+<h2>PESQUISA DE BENS</h2>
+<div class="form-grid" id="gridContrato">
+<div>
+<label>Foi realizada a pesquisa de bens administrativa?</label>
+<select onchange="alterarCorPesquisa(this)">
+<option value="">Selecione</option>
+<option>Não</option>
+<option>Sim</option>
+</select>
+</div>
+<div>
+<label>Localização de bens:</label>
+<input placeholder="Houve localização de bens?" type="text"/>
+</div>
+<div style="grid-column: span 2;">
+<label>Relatório da CIP:</label>
+<select>
+<option value="">Selecione</option>
+<option>Sim</option>
+<option>Não</option>
+</select>
+</div>
+</div>
+</div>
+<div class="section">
+<h2>PROCESSOS VINCULADOS</h2>
+<label>Tem processo vinculado?</label>
+<select onchange="document.getElementById('camposVinculo').style.display = this.value === 'Sim' ? 'block' : 'none'">
+<option value="">Selecione</option>
+<option>Não</option>
+<option>Sim</option>
+</select>
+<div id="camposVinculo" style="display:none;">
+<div id="processosAdicionados"></div>
+<button class="btn-form same-size preto" onclick="adicionarProcesso()" type="button">Adicionar</button>
+</div>
+</div>
+<div class="section">
+<h2>OUTRAS INFORMAÇÕES</h2>
+<label>Observações gerais:</label>
+<textarea placeholder="Digite aqui qualquer observação adicional..." rows="5"></textarea>
+</div>
+<div class="section">
+<h2>ESPAÇO RESERVADO PARA PRINT (SE NECESSÁRIO)</h2>
+<p>Se necessário, copie um print e cole aqui usando <strong>Ctrl + V</strong>:</p>
+<div class="image-paste-area" id="paste-area">Clique aqui e cole sua imagem com Ctrl + V</div>
+</div>
+<div style="text-align: center;">
+<button class="btn-form same-size azul" onclick="imprimirFormulario()">Imprimir Formulário</button>
+<button class="btn-form same-size vermelho" onclick="resetFormulario()">Limpar Formulário</button>
+</div>
+</div>
+</body>
+</html>
