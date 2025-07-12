@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>RC - ACORDO PARCELADO / À VISTA</title>
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            font-size: 13px;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="date"], select, textarea, #output {
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Calibri, sans-serif;
+            font-size: 13px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #output {
+            white-space: pre-line;
+            margin-top: 30px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>RC - ACORDO PARCELADO / À VISTA</h2>
+
+        <label for="nome">Nome:</label>
+        <select id="nome">
+            <option value="" disabled selected>Selecione um nome</option>
+            <option value="Cintia Miranda">Cintia Miranda</option>
+            <option value="Vitor Velardo">Vitor Velardo</option>
+            <option value="Ester Klajman">Ester Klajman</option>
+            <option value="Rayanne Freitas">Rayanne Freitas</option>
+        </select>
+
+        <label for="dataAcordo">Data do acordo:</label>
+        <input type="date" id="dataAcordo">
+
+        <label for="valorAcordo">Valor do acordo:</label>
+        <input type="text" id="valorAcordo">
+
+        <label for="gcpj">GCPJ:</label>
+        <input type="text" id="gcpj">
+
+        <label for="processo">Processo:</label>
+        <input type="text" id="processo">
+
+        <label for="reu">Réu:</label>
+        <input type="text" id="reu">
+
+        <label for="contratoRef">Contrato refinanciado:</label>
+        <input type="text" id="contratoRef">
+
+        <label for="contratoNovo">Contrato novo:</label>
+        <input type="text" id="contratoNovo">
+
+        <label for="valorConfessado">Valor confessado:</label>
+        <input type="text" id="valorConfessado">
+
+        <label for="valorPago">Valor a ser pago:</label>
+        <input type="text" id="valorPago">
+
+        <label for="valorEntrada">Valor da entrada:</label>
+        <input type="text" id="valorEntrada">
+
+        <label for="quantParcelas">Quantidade de parcelas:</label>
+        <input type="text" id="quantParcelas">
+
+        <label for="valorParcelas">Valor das parcelas:</label>
+        <input type="text" id="valorParcelas">
+
+        <label for="taxa">Taxa aplicada:</label>
+        <input type="text" id="taxa">
+
+        <label for="primeiroVenc">Primeiro vencimento:</label>
+        <input type="date" id="primeiroVenc">
+
+        <label for="ultimoVenc">Último vencimento:</label>
+        <input type="date" id="ultimoVenc">
+
+        <label for="participacao">Participação:</label>
+        <input type="text" id="participacao">
+
+        <label for="aprovacao">Aprovação:</label>
+        <select id="aprovacao">
+            <option value="DRC">DRC</option>
+            <option value="Escritório">Escritório</option>
+            <option value="DRC/Escritório">DRC/Escritório</option>
+        </select>
+
+        <button onclick="gerarTexto()">Gerar Texto</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function formatarDataExtenso(dataISO) {
+            if (!dataISO) return "[DATA]";
+            const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+            const data = new Date(dataISO + 'T00:00:00');
+            return `${data.getDate()} de ${meses[data.getMonth()]} de ${data.getFullYear()}`;
+        }
+
+        function gerarTexto() {
+            const nome = document.getElementById("nome").value;
+            const saudacao = (new Date().getHours() < 12) ? "dia" : "tarde";
+
+            const textoFinal = `Prezados, boa ${saudacao}!
+
+Segue a presente RC para informar o acordo celebrado entre as partes.
+
+1 - Data do acordo: ${formatarDataExtenso(document.getElementById("dataAcordo").value)}
+
+2 - Valor do acordo: ${document.getElementById("valorAcordo").value}
+
+3 - Condições do acordo:
+GCPJ	${document.getElementById("gcpj").value}
+PROCESSO	${document.getElementById("processo").value}
+RÉU	${document.getElementById("reu").value}
+CONTRATO REFINANCIADO	${document.getElementById("contratoRef").value}
+CONTRATO NOVO	${document.getElementById("contratoNovo").value}
+VALOR CONFESSADO:	${document.getElementById("valorConfessado").value}
+VALOR A SER PAGO:	${document.getElementById("valorPago").value}
+VALOR DA ENTRADA:	${document.getElementById("valorEntrada").value}
+QUANTIDADE DE PARCELAS:	${document.getElementById("quantParcelas").value}
+VALOR DAS PARCELAS:	${document.getElementById("valorParcelas").value}
+TAXA APLICADA:	${document.getElementById("taxa").value}
+PRIMEIRO VENCIMENTO:	${formatarDataExtenso(document.getElementById("primeiroVenc").value)}
+ÚLTIMO VENCIMENTO:	${formatarDataExtenso(document.getElementById("ultimoVenc").value)}
+PARTICIPAÇÃO:	${document.getElementById("participacao").value}
+
+4 - Aprovação: ${document.getElementById("aprovacao").value}
+
+Obrigado(a).
+
+${nome} - Klajman Advogados.`;
+
+            document.getElementById("output").textContent = textoFinal;
+        }
+    </script>
+</body>
+</html>
