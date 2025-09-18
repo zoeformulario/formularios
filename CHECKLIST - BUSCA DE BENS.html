@@ -1,0 +1,1483 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist de Busca de Bens</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    h1 { text-align: center; margin-bottom: 10px; color: #2F3B55; }
+    #progress {
+      text-align: center; font-size: 16px; margin-bottom: 30px;
+      color: #2F3B55; font-weight: bold;
+    }
+    .categoria {
+      background: #2F3B55; color: white; padding: 10px; margin-top: 30px;
+      border-radius: 6px; font-size: 18px;
+    }
+    .item {
+      background: #E0E0E0; color: #000; border-radius: 6px;
+      margin: 10px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: background 0.3s, border 0.3s;
+    }
+    .item.completed {
+      background: #d4edda !important;  /* verde claro */
+      border: 2px solid #28a745;
+    }
+    .item-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px; cursor: pointer; font-weight: bold;
+    }
+    .toggle-btn { font-size: 18px; font-weight: bold; }
+    .content {
+      display: none; padding: 10px; border-top: 1px solid #ccc; background: white; color: #000;
+    }
+    textarea {
+      width: 100%; height: 60px; resize: vertical;
+      border-radius: 4px; border: 1px solid #ccc; padding: 5px;
+      margin-top: 5px;
+    }
+    .info { font-size: 14px; color: #333; margin-top: 5px; }
+    .actions {
+      margin-top: 40px; text-align: center;
+    }
+    button {
+      background: #2F3B55; color: white; border: none;
+      padding: 10px 20px; margin: 10px; cursor: pointer;
+      border-radius: 6px; font-size: 16px;
+    }
+    button:hover { background: #3f4f77; }
+
+    /* Impressão: mostrar apenas itens expandidos */
+    
+@media print {
+  .item { display: none !important; }
+  .item.completed { display: block !important; }
+  .item .content { display: block !important; } /* mostra sempre conteúdo do concluído */
+}
+
+      /* .item-header { display: none !important; } */
+      .item .content[style*="block"] { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Checklist de Busca de Bens</h1>
+<div style="text-align:center; margin-bottom:20px;">
+  <label for="gcpj"><strong>GCPJ:</strong></label>
+  <input type="text" id="gcpj" name="gcpj" placeholder="Insira o número do GCPJ" 
+         style="padding:5px; border-radius:4px; border:1px solid #ccc; width:250px; text-align:center;">
+</div>
+  <div id="progress">0 de 0 concluídos</div>
+
+<div class='categoria'>Investigação Patrimonial Bradesco</div>
+
+<div class="item">
+  <div class="item-header" onclick="toggleContent(this)">
+    Pedido de investigação patrimonial junto ao Banco Bradesco
+    <span class="toggle-btn">+</span>
+  </div>
+  <div class="content">
+    <p><strong>Como a busca é feita:</strong> Pedido Judicial / Extrajudicial</p>
+    <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+    <textarea placeholder="Resultado da investigação..."></textarea>
+    <div class="info">Observação: -</div>
+  </div>
+</div>
+
+<div class='categoria'>Busca de Ativos Financeiros</div>
+
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de ativos financeiros (dinheiro) pelo SISBAJUD (com Teimosinha)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de ativos financeiros (dinheiro) pelo SISBAJUD (com Teimosinha permanente)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de conta-salário pelo SISBAJUD (com Teimosinha) - Dívida de caráter alimentar
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de conta-salário pelo SISBAJUD (com Teimosinha) - Dívida de qualquer natureza
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de salário (dívida de caráter alimentar) através de desconto em folha de pagamento pelo empregador
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de salário (dívida de qualquer natureza) através de desconto em folha de pagamento pelo empregador
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca de dinheiro em espécie na residência do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de localização e penhora de ativos financeiros do executado que estejam em poder de Instituição Financeira Internacional
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de localização e penhora de ativos financeiros do executado que estejam em poder de Securitizadora de Crédito
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de localização e penhora de ativos financeiros do executado que estejam em poder de Fundo de Investimento em Direito Creditório
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de localização e penhora de criptomoedas custodiadas por empresas nacionais
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de localização e penhora de criptomoedas custodiadas por empresas internacionais
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de localização e penhora de NFT de propriedade do executado, custodiada por empresas nacionais
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de saldo de Previdência Privada
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de saldo de FGTS - execução de alimentos
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de saldo de FGTS - qualquer tipo de execução
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de saldo de PIS/PASEP - execução de alimentos
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de saldo de PIS/PASEP - qualquer tipo de execução
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de Poupança do executado, mas que é movimentada como conta-corrente
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de ativos financeiros (dinheiro) em nome da cônjuge (companheira) do executado, pelo SISBAJUD (com Teimosinha)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de ativos financeiros (dinheiro) em nome da cônjuge (companheira) do executado, pelo SISBAJUD (com Teimosinha permanente)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de ativos financeiros (dinheiro) em nome das filiais da empresa executada, pelo SISBAJUD (com Teimosinha)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de ativos financeiros (dinheiro) em nome do sócio da MEI executada, pelo SISBAJUD (com Teimosinha)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de fiança prestada pelo devedor em ação penal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de depósito recursal feito pelo devedor em ação trabalhista
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        <div class='categoria'>Busca de Bem Imóvel</div>
+
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca presencial de bem imóvel matriculado em nome do devedor 
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através de requerimento extrajudicial apresentado ao Tabelião</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca eletrônica de bem imóvel matriculado em nome do devedor, através do Portal Registradores
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site REGISTRADORES</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca eletrônica de bem imóvel matriculado em nome do devedor, através empresas que prestam essa informação
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através de sites que prestam esse serviço</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca de bens Imóveis declarados pelo devedor perante a Receita Federal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do Sistema INFOJUD</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca presencial por escritura de compra e venda lavrada pelo devedor (imóvel adquirido, mas não registrado)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através de requerimento extrajudicial apresentado ao Tabelião</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca eletrônica por escritura de compra e venda lavrada pelo devedor (imóvel adquirido, mas não registrado), através empresas que prestam essa informação
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca presencial por procurações lavradas em poder do devedor, autorizando a venda de imóveis
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca eletrônica por procurações lavradas em poder do devedor, autorizando a venda de imóveis, através de empresas que prestam essa informação
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca por escritura pública de usucapião extrajudicial lavrada pelo devedor através do CENSEC
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site CENSEC</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca por imóveis declarados pelo devedor junto ao IAGRO, para fins de regularização da área
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site SIGEF</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca por imóveis registrados no nome do executado junto ao SNCR
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        <div class='categoria'>Busca de Bem Móvel</div>
+
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de veículos de propriedade do executado via serviços pagos
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site SeguroCred, por exemplo</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca e penhora de veículos de propridade do executado via RENAJUD
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca e penhora de veículos de propriedade do executado via Alegação de Venda
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através de requerimento apresentado ao Diretor do Detran</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de veículo que esteja na posse do executado, via Oficial de Justiça
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca e penhora de veículos registrados em nome da empresa matriz, por uma dívida da filial (e vice-versa)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca e penhora de semoventes de propriedade do executado, através da Secretaria de Fazenda Estadual
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca e penhora de jóios e objetos de valor dados em penhor pelo executado junto à Caixa Econômica Federal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca e penhora de navios, embarcações, motores de popa e jetski de propridade do executado, junto à Capitania dos Portos
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de aeronaves de propriedade do executado junto à ANAC
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site da ANAC</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de bens que guarnecem a residência do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de equipamentos de produção de energia elétrica de propriedade do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de bens que estejam guardados em cofre na residência do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca de bens móveis declarados pelo devedor perante a Receita Federal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de safra de propriedade do executado, em depósito de armazém, cooperativa ou cerealista
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de semoventes de propriedade do executado, apascentados em área arrendada ou própria
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de arma de fogo de propriedade do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de tratores e máquinas agrícolas através do Renagro
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de bicicleta do devedor (com localização a partir do aplicativo Strava) - Sugestão do aluno Tubarão Matheus Augusto Wunsche
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de Drone, junto à Anac - Sugestão do aluno Tubarão Matheus Augusto Wunsche
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        <div class='categoria'>Busca de Direito/Crédito</div>
+
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de crédito de aluguel que o executado tenha com terceiro
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de recebíveis que o executado tenha junto a intermediadores de pagamento através de Registradores
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de créditos existentes em ações judiciais movidas pelo executado (penhora no rosto dos autos)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do Portal dos Tribunais</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de direito de ação do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de créditos/pontos que o executado tenha junto a Programas de Fidelidade 
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de créditos que o executado tenha junto a programas de cashback (recompensa)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de crédito que o executado tenha junto ao Poder Público (Portal da Transparência)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através dos Portais de Transparência</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de crédito de nota fiscal eletrônica
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de crédito tributário que a empresa executada tenha com o Poder Público
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de direito que o executado tenha em herança aberta
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de direito que o executado tenha em inventário judicial
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do Portal dos Tribunais</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de direito que o executado tenha em inventário extrajudicial
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site CENSEC</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de créditos que o executado tenha junto a aplicativos de serviços (Uber, Ifood e etc)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de cota de consórcio da qual o executado seja titular
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de bens guardados em cofres de empresas particulares e intituições financeiras
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de direitos reais do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através de busca presencial em cartórios de registro de imóveis</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de crédito do executado em cartão de crédito pré-pago
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de crédito de energia elétrica produzida pelo executato, junto à concessionária de energia
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de crédito de título executivo do qual o executado seja portador (cheque, nota promissõria e etc)
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de direitos que o executado possui em contrato garantido por alienação fiduciária
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de direito real de laje do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de direito de posse do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de direito de usufruto do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de direitos autorais
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de direito de marca e patente de propriedade do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site do INPI</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de programa de computador de propriedade do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site do INPI</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de contrato de tecnologia e franquia de propriedade do executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site do INPI</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca de cotas sociais de propriedade do executado junto ao Portal REDESIM
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site REDESIM</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de penhora de parte do faturamento da empresa executada
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca por testamento no qual o devedor conste como beneficiário
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site CENSEC</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de direitos declarados pelo devedor perante a Receita Federal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Conforme informações no site: https://www.bcb.gov.br/estabilidadefinanceira/sistema-valores-a-receber</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca e penhora de valores que o executado tem a receber, anotados no sistema SVR do Banco Central
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Busca por direito que o executado tenha recebido em separação ou divórcio extrajudicial
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Extrajudicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: Através do site CENSEC</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Busca e Penhora de Direito de Imagem que o executado tenha junto a emissoras de TV
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Penhora de crédito de bilheteria de evento realizado pelo executado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Penhora de crédito ou comissão por venda de jogador de futebol, feita pelo devedor
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Busca e penhora de crédito que o executado tenha junto à redes sociais (Facebook, Instagram, Youtube)- monetização de vídeos
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Busca de Direito à Restituição de Imposto de Renda
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Busca de Crédito que o servidor público tenha junto ao órgão em que trabalha ou trabalhou
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido para que o juízo oficie à Receita Federal, para que ela acesse a DIMOB e apresente eventuais negócio imobiliários que tenham sido feitos pelo devedor e que tenha sido declarados por corretores e imobiliárias
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de Busca de Bens e Direitos junto ao SNIPER
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca de cota de consórcio e previdência privada, através do Sistema Sped, módulo E-Financeira, da Receita Federal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca de bens através do RIF - COAF
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido de busca de crédito do devedor junto à União, através do Sistema COMPROT, da Receita Federal
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido para que o juízo oficie à Receita Federal, para que ela acesse a DIMOB e apresente eventuais negócio imobiliários que tenham sido feitos pelo devedor e que tenha sido declarados por cconstrutoras e incorporadoras - DIMOB CONSTRUÇÃO
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido para que o juízo oficie à Receita Federal, para que ela acesse a DIMOB e apresente eventuais alugueis recebidos pelo executado - DIMOB LOCAÇÃO
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+        <div class="item">
+          <div class="item-header" onclick="toggleContent(this)">
+            Pedido para que o juízo oficie à Receita Federal, solicitando que apresente o Dossiê Integrado
+            <span class="toggle-btn">+</span>
+          </div>
+          <div class="content">
+            <p><strong>Como a busca é feita:</strong> Pedido Judicial</p>
+            <label><input type="checkbox" onchange="markCompleted(this)"> Concluído</label>
+            <textarea placeholder="Resultado da busca..."></textarea>
+            <div class="info">Observação: -</div>
+          </div>
+        </div>
+        
+  <div class="actions">
+    <button onclick="exportTXT()">Exportar em TXT</button>
+    <button onclick="window.print()">Imprimir em PDF</button>
+  </div>
+
+  <script>
+    let totalItems = 103;
+    let completedItems = 0;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateProgress();
+    });
+
+    function toggleContent(header) {
+      const content = header.nextElementSibling;
+      const btn = header.querySelector(".toggle-btn");
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        btn.textContent = "+";
+      } else {
+        content.style.display = "block";
+        btn.textContent = "-";
+      }
+    }
+
+    function markCompleted(checkbox) {
+      const item = checkbox.closest(".item");
+      if (checkbox.checked) {
+        item.classList.add("completed");
+      } else {
+        item.classList.remove("completed");
+      }
+      updateProgress();
+    }
+
+    function updateProgress() {
+      completedItems = document.querySelectorAll(".item.completed").length;
+      document.getElementById("progress").innerText =
+        completedItems + " de " + totalItems + " concluídos";
+    }
+
+    function exportTXT() {
+      let text = "Resultados da Busca de Bens:\n\n";
+      document.querySelectorAll(".item").forEach(item => {
+        const checkbox = item.querySelector("input[type=checkbox]");
+        const textarea = item.querySelector("textarea");
+        const title = item.querySelector(".item-header").innerText.trim();
+
+        if (checkbox.checked || textarea.value.trim() !== "") {
+          text += "▶ " + title + "\n";
+          if (checkbox.checked) text += "   ✔ Concluído\n";
+          if (textarea.value.trim() !== "") text += "   Resultado: " + textarea.value.trim() + "\n";
+          text += "\n";
+        }
+      });
+
+      const blob = new Blob([text], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "checklist_busca_bens.txt";
+      link.click();
+    }
+  </script>
+</body>
+</html>
