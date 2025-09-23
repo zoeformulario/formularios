@@ -212,7 +212,7 @@
       const protocolo = protocolos[i].value.trim();
       const valor = parseFloat(valores[i].value);
       if (item && !isNaN(valor)) {
-        textoFinal += `(*) ${item}${protocolo ? ` (Protocolo: ${protocolo})` : ''} — R$ ${valor.toFixed(2).replace('.', ',')}
+        textoFinal += `(*) ${item}${protocolo ? ` (Protocolo: ${protocolo})` : ''} - R$ ${valor.toFixed(2).replace('.', ',')}
 `;
         total += valor;
       }
@@ -247,7 +247,7 @@ Vitor Velardo - Klajman Advogados.`;
       const item = descricoes[i].value.trim();
       const valor = parseFloat(valores[i].value);
       if (item && !isNaN(valor)) {
-        partes.push(`(*) ${item} — R$ ${valor.toFixed(2).replace('.', ',')}`);
+        partes.push(`(*) ${item} - R$ ${valor.toFixed(2).replace('.', ',')}`);
       }
     }
     return partes.join(' / ');
