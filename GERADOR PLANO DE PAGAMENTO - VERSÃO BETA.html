@@ -1,263 +1,292 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Gerador de Plano de Pagamento</title>
-    <style>
-        body {
-            font-family: Calibri, sans-serif;
-            font-size: 14px;
-            background-color: #f9f9f9;
-            padding: 20px;
-        }
-        .container {
-            max-width: 700px;
-            margin: auto;
-        }
-        .grupo {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-        }
-        h2 {
-            margin-top: 0;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        input, select {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            padding: 6px;
-            width: 100%;
-            margin-top: 4px;
-            font-size: 14px;
-        }
-        .entrada-extra {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 6px;
-        }
-        .botoes {
-            text-align: center;
-            margin-top: 30px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 14px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .gerar { background-color: #4CAF50; color: white; }
-        .extrair { background-color: #2196F3; color: white; }
-        .resetar { background-color: #f44336; color: white; }
-        #resultado {
-            white-space: pre-wrap;
-            background: #fff;
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Gerador de Plano de Pagamento</title>
+
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.grupo {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.entrada-extra {
+  display: none;
+  background: #f1f3f5;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.botoes {
+  text-align: center;
+  margin-top: 30px;
+}
+
+button {
+  padding: 12px 22px;
+  margin: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.gerar { background: #2ecc71; color: #fff; }
+.exportar { background: #3498db; color: #fff; }
+.resetar { background: #e74c3c; color: #fff; }
+
+#resultado {
+  background: #fff;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+</style>
 </head>
+
 <body>
 <div class="container">
-    <h1 style='text-align:center; margin-bottom:30px;'>Gerador de Plano de Pagamento</h1>
+<h1>Gerador de Plano de Pagamento</h1>
 
-    <form id="planoForm">
-        <!-- Grupos -->
-        
+<form id="planoForm">
+
+<!-- ACORDO -->
 <div class="grupo">
-    <h2>RC - ACOMPANHAR PAGAMENTO DE ACORDO</h2>
-    <label>Há entrada?
-        <select name="entrada_acordo" onchange="toggleEntradaInfo('acordo')">
-            <option value="nao">Não</option>
-            <option value="sim">Sim</option>
-        </select>
-    </label>
-    <div class="entrada-extra" id="entrada_extra_acordo">
-        <label>Data do pagamento da entrada:
-            <input type="date" name="data_entrada_acordo">
-        </label>
-        <label>Valor da entrada:
-            <input type="text" name="valor_entrada_acordo" step="0.01">
-        </label>
-    </div>
-    <label>Data do primeiro vencimento:
-        <input type="date" name="vencimento_acordo">
-    </label>
-    <label>Quantidade de parcelas:
-        <input type="number" name="parcelas_acordo" min="1">
-    </label>
-    <label>Valor da parcela:
-        <input type="text" name="valor_acordo" step="0.01">
-    </label>
+<h2>ACORDO</h2>
+
+<label>Há entrada?
+<select name="entrada_acordo" onchange="toggleEntradaInfo('acordo')">
+<option value="nao">Não</option>
+<option value="sim">Sim</option>
+</select>
+</label>
+
+<div class="entrada-extra" id="entrada_extra_acordo">
+<label>Data da entrada:
+<input type="date" name="data_entrada_acordo">
+</label>
+<label>Valor da entrada:
+<input type="text" name="valor_entrada_acordo">
+</label>
 </div>
 
-<div class="grupo">
-    <h2>RC - ACOMPANHAR PAGAMENTO HONORÁRIOS (NÃO BANCO)</h2>
-    <label>Há entrada?
-        <select name="entrada_nban" onchange="toggleEntradaInfo('nban')">
-            <option value="nao">Não</option>
-            <option value="sim">Sim</option>
-        </select>
-    </label>
-    <div class="entrada-extra" id="entrada_extra_nban">
-        <label>Data do pagamento da entrada:
-            <input type="date" name="data_entrada_nban">
-        </label>
-        <label>Valor da entrada:
-            <input type="text" name="valor_entrada_nban" step="0.01">
-        </label>
-    </div>
-    <label>Data do primeiro vencimento:
-        <input type="date" name="vencimento_nban">
-    </label>
-    <label>Quantidade de parcelas:
-        <input type="number" name="parcelas_nban" min="1">
-    </label>
-    <label>Valor da parcela:
-        <input type="text" name="valor_nban" step="0.01">
-    </label>
+<label>Data do primeiro vencimento:
+<input type="date" name="vencimento_acordo">
+</label>
+
+<label>Quantidade de parcelas:
+<input type="number" name="parcelas_acordo" min="1">
+</label>
+
+<label>Valor da parcela:
+<input type="text" name="valor_acordo">
+</label>
 </div>
 
+<!-- HONORÁRIOS RÉU/EXECUTADO -->
 <div class="grupo">
-    <h2>RC - ACOMPANHAR PAGAMENTO HONORÁRIOS BANCO</h2>
-    <label>Há entrada?
-        <select name="entrada_banco" onchange="toggleEntradaInfo('banco')">
-            <option value="nao">Não</option>
-            <option value="sim">Sim</option>
-        </select>
-    </label>
-    <div class="entrada-extra" id="entrada_extra_banco">
-        <label>Data do pagamento da entrada:
-            <input type="date" name="data_entrada_banco">
-        </label>
-        <label>Valor da entrada:
-            <input type="text" name="valor_entrada_banco" step="0.01">
-        </label>
-    </div>
-    <label>Data do primeiro vencimento:
-        <input type="date" name="vencimento_banco">
-    </label>
-    <label>Quantidade de parcelas:
-        <input type="number" name="parcelas_banco" min="1">
-    </label>
-    <label>Valor da parcela:
-        <input type="text" name="valor_banco" step="0.01">
-    </label>
+<h2>HONORÁRIOS RÉU/EXECUTADO</h2>
+
+<label>Há entrada?
+<select name="entrada_nban" onchange="toggleEntradaInfo('nban')">
+<option value="nao">Não</option>
+<option value="sim">Sim</option>
+</select>
+</label>
+
+<div class="entrada-extra" id="entrada_extra_nban">
+<label>Data da entrada:
+<input type="date" name="data_entrada_nban">
+</label>
+<label>Valor da entrada:
+<input type="text" name="valor_entrada_nban">
+</label>
 </div>
 
+<label>Data do primeiro vencimento:
+<input type="date" name="vencimento_nban">
+</label>
 
-        <!-- Botões -->
-        <div class="botoes">
-            <button type="button" class="gerar" onclick="gerarPlano()">Gerar Plano de Pagamento</button>
-            <button type="button" class="extrair" onclick="exportarTXT()">Extrair em TXT</button>
-            <button type="reset" class="resetar" onclick="resetEntrada()">Resetar</button>
-        </div>
+<label>Quantidade de parcelas:
+<input type="number" name="parcelas_nban" min="1">
+</label>
 
-        <pre id="resultado"></pre>
-    </form>
+<label>Valor da parcela:
+<input type="text" name="valor_nban">
+</label>
+</div>
+
+<!-- HONORÁRIOS BANCO -->
+<div class="grupo">
+<h2>HONORÁRIOS BANCO</h2>
+
+<label>Há entrada?
+<select name="entrada_banco" onchange="toggleEntradaInfo('banco')">
+<option value="nao">Não</option>
+<option value="sim">Sim</option>
+</select>
+</label>
+
+<div class="entrada-extra" id="entrada_extra_banco">
+<label>Data da entrada:
+<input type="date" name="data_entrada_banco">
+</label>
+<label>Valor da entrada:
+<input type="text" name="valor_entrada_banco">
+</label>
+</div>
+
+<label>Data do primeiro vencimento:
+<input type="date" name="vencimento_banco">
+</label>
+
+<label>Quantidade de parcelas:
+<input type="number" name="parcelas_banco" min="1">
+</label>
+
+<label>Valor da parcela:
+<input type="text" name="valor_banco">
+</label>
+</div>
+
+<div class="botoes">
+<button type="button" class="gerar" onclick="gerarPlano()">Gerar Plano</button>
+<button type="button" class="exportar" onclick="exportarTXT()">Exportar TXT</button>
+<button type="reset" class="resetar" onclick="resetEntrada()">Resetar</button>
+</div>
+
+<pre id="resultado"></pre>
+</form>
 </div>
 
 <script>
 function toggleEntradaInfo(id) {
-    const valor = document.querySelector(`select[name="entrada_${id}"]`).value;
-    const div = document.getElementById(`entrada_extra_${id}`);
-    div.style.display = valor === "sim" ? "block" : "none";
+  const valor = document.querySelector(`select[name="entrada_${id}"]`).value;
+  document.getElementById(`entrada_extra_${id}`).style.display =
+    valor === "sim" ? "block" : "none";
 }
 
 function resetEntrada() {
-    ['acordo', 'nban', 'banco'].forEach(id => {
-        document.getElementById(`entrada_extra_${id}`).style.display = 'none';
-    });
+  ["acordo","nban","banco"].forEach(id => {
+    document.getElementById(`entrada_extra_${id}`).style.display = "none";
+  });
 }
 
-function adicionarMes(data, quantidade) {
-    const resultado = new Date(data);
-    resultado.setMonth(resultado.getMonth() + quantidade);
-    return resultado.toLocaleDateString('pt-BR');
+/* CRIA DATE SEM UTC */
+function dateFromInputSafe(dateStr) {
+  return dateStr ? new Date(dateStr + "T12:00:00") : null;
 }
 
-function gerarParcelas(vencimento, parcelas, valor) {
-    const parcelasTexto = [];
-    const dataBase = new Date(vencimento);
-    for (let i = 0; i < parcelas; i++) {
-        const venc = adicionarMes(dataBase, i);
-        parcelasTexto.push(`Parcela ${i + 1} - Vencimento: ${venc} - Valor: ${limparValorBR(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`);
-    }
-    return parcelasTexto.join('\n');
+function formatDateBR(dt) {
+  if (!dt) return "";
+  return String(dt.getDate()).padStart(2,"0") + "/" +
+         String(dt.getMonth()+1).padStart(2,"0") + "/" +
+         dt.getFullYear();
 }
 
+function addMonthsSafe(dateStr, qtd) {
+  const dt = dateFromInputSafe(dateStr);
+  if (!dt) return null;
 
-        function limparValorBR(valorTexto) {
-            return parseFloat(
-                valorTexto.replace("R$", "")
-                          .replace(/\./g, "")
-                          .replace(",", ".")
-                          .trim()
-            );
-        }
+  const day = dt.getDate();
+  dt.setDate(1);
+  dt.setMonth(dt.getMonth() + qtd);
 
+  const lastDay = new Date(dt.getFullYear(), dt.getMonth()+1, 0).getDate();
+  dt.setDate(Math.min(day, lastDay));
+  dt.setHours(12,0,0,0);
+  return dt;
+}
+
+function limparValorBR(v) {
+  return parseFloat(
+    (v || "0").replace("R$","").replace(/\./g,"").replace(",",".")
+  ) || 0;
+}
+
+function gerarParcelas(dataStr, parcelas, valor) {
+  let texto = "";
+  for (let i=0;i<parcelas;i++) {
+    const dt = addMonthsSafe(dataStr, i);
+    texto += `Parcela ${i+1} - Vencimento: ${formatDateBR(dt)} - Valor: ${limparValorBR(valor).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+  }
+  return texto;
+}
+
+function bloco(titulo,id) {
+  const f = document.forms["planoForm"];
+  const venc = f[`vencimento_${id}`].value;
+  const parcelas = parseInt(f[`parcelas_${id}`].value || 0);
+  const valor = f[`valor_${id}`].value;
+  let t = `** ${titulo} **\nEntrada: ${f[`entrada_${id}`].value}\n`;
+
+  if (f[`entrada_${id}`].value === "sim") {
+    t += `Data da entrada: ${formatDateBR(dateFromInputSafe(f[`data_entrada_${id}`].value))}\n`;
+    t += `Valor da entrada: ${limparValorBR(f[`valor_entrada_${id}`].value).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+  }
+
+  t += `Primeiro vencimento: ${formatDateBR(dateFromInputSafe(venc))}\n`;
+  t += `Último vencimento: ${formatDateBR(addMonthsSafe(venc, parcelas-1))}\n`;
+  t += `Quantidade de parcelas: ${parcelas}\n`;
+  t += `Valor da parcela: ${limparValorBR(valor).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n\n`;
+  t += gerarParcelas(venc, parcelas, valor) + "\n";
+  return t;
+}
 
 function gerarPlano() {
-    const form = document.forms['planoForm'];
-    let output = '';
-
-    function bloco(titulo, id) {
-        const entrada = form[`entrada_${id}`].value;
-        const vencimento = form[`vencimento_${id}`].value;
-        const parcelas = form[`parcelas_${id}`].value;
-        const valor = form[`valor_${id}`].value;
-
-        let texto = `** ${titulo} **\n`;
-        texto += `Entrada: ${entrada}\n`;
-
-        if (entrada === 'sim') {
-            const dataEntrada = form[`data_entrada_${id}`].value;
-            const valorEntrada = form[`valor_entrada_${id}`].value;
-            texto += `Data da entrada: ${new Date(dataEntrada).toLocaleDateString('pt-BR')}\n`;
-            texto += `Valor da entrada: ${limparValorBR(valorEntrada).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}\n`;
-        }
-
-        texto += `Primeiro vencimento: ${new Date(vencimento).toLocaleDateString('pt-BR')}\n`;
-
-            const dataUltima = new Date(vencimento);
-            dataUltima.setMonth(dataUltima.getMonth() + parseInt(parcelas) - 1);
-            texto += `Último vencimento: ${dataUltima.toLocaleDateString('pt-BR')}
-`;
-
-        texto += `Quantidade de parcelas: ${parcelas}\n`;
-        texto += `Valor da parcela: R$ ${limparValorBR(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}\n\n`;
-        texto += gerarParcelas(vencimento, parcelas, valor) + '\n\n';
-        return texto;
-    }
-
-    output += bloco('ACORDO', 'acordo');
-    output += bloco('HONORÁRIOS NÃO BANCO', 'nban');
-    output += bloco('HONORÁRIOS BANCO', 'banco');
-
-    document.getElementById('resultado').innerText = output;
+  let out = "";
+  out += bloco("ACORDO","acordo");
+  out += bloco("HONORÁRIOS RÉU/EXECUTADO","nban");
+  out += bloco("HONORÁRIOS BANCO","banco");
+  document.getElementById("resultado").innerText = out;
 }
 
 function exportarTXT() {
-    const texto = document.getElementById('resultado').innerText;
-    const blob = new Blob([texto], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.download = 'plano_pagamento.txt';
-    link.href = window.URL.createObjectURL(blob);
-    link.click();
+  const blob = new Blob([document.getElementById("resultado").innerText], {type:"text/plain"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "plano_pagamento.txt";
+  a.click();
 }
 </script>
 </body>
