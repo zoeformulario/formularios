@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro de Pesquisa de Bens</title>
+
+<style>
+:root{
+  --bg:#e6e6e6;
+  --card:#ffffff;
+  --text:#111111;
+  --label:#000000;
+  --line:rgba(0,0,0,.18);
+  --btn:#1f6feb;
+  --btn2:#d1d5db;
+  --btnDanger:#ef4444;
+  --radius:14px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding:28px 14px 60px;
+}
+
+.wrap{max-width:1200px;margin:0 auto}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:18px;
+  gap:16px;
+}
+
+h1{margin:0;font-size:22px;color:#000}
+.subtitle{font-size:13px;color:#111;margin-top:6px}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  margin-bottom:18px;
+}
+
+.card-hd{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  background:#f2f2f2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.card-hd h2{
+  margin:0;
+  font-size:13px;
+  text-transform:uppercase;
+  color:#000;
+}
+
+.card-bd{padding:14px}
+
+label{
+  font-size:14px;
+  font-weight:700;
+  color:#000;
+  display:block;
+  margin-bottom:6px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:9px 11px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  font-size:14px;
+  background:#fff;
+  color:#111;
+}
+
+textarea{resize:vertical;min-height:90px}
+
+.row{display:grid;gap:12px;margin-bottom:12px}
+@media(min-width:900px){
+  .cols-2{grid-template-columns:1fr 1fr}
+  .cols-3{grid-template-columns:1.3fr 1fr 1fr}
+  .cols-5{grid-template-columns:1.2fr 1fr 1fr 1fr .8fr}
+}
+
+.btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+button{
+  padding:9px 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--btn2);
+  cursor:pointer;
+  font-weight:700;
+  color:#111;
+}
+
+.primary{background:var(--btn);color:#fff;border-color:rgba(31,111,235,.5)}
+.danger{background:var(--btnDanger);color:#fff;border-color:rgba(239,68,68,.5)}
+.ghost{background:#f3f4f6}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  border:1px solid var(--line);
+  background:#fff;
+}
+
+th,td{
+  padding:9px;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+  vertical-align:top;
+}
+
+th{
+  background:#f1f5f9;
+  text-transform:uppercase;
+  font-size:12px;
+}
+
+.mono{font-family:monospace}
+
+.total{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  margin-top:10px;
+}
+
+.no-print{}
+
+/* Rodapé */
+.footer-note{
+  margin-top:10px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px dashed rgba(0,0,0,.25);
+  background:#fafafa;
+  font-size:13px;
+  color:#111;
+}
+
+.footer-note strong{color:#000}
+
+@media print{
+  body{background:#fff;color:#000}
+  .no-print{display:none !important}
+  button,.btns{display:none !important}
+  .card{border:1px solid #ccc}
+  input,select,textarea{border:1px solid #ccc}
+  .footer-note{border:1px dashed #999;background:#fff}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>Registro de Pesquisa de Bens</h1>
+    <div class="subtitle">Relatório interno</div>
+  </div>
+  <div class="subtitle" id="today"></div>
+</header>
+
+<div class="card">
+  <div class="card-hd"><h2>Identificação</h2></div>
+  <div class="card-bd">
+    <div class="row cols-2">
+      <div>
+        <label>GCPJ</label>
+        <input id="gcpj" placeholder="Ex.: 2300679346">
+      </div>
+      <div>
+        <label>Processo</label>
+        <input id="processo" placeholder="Ex.: 0000000-00.0000.0.00.0000">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Área que não aparece na impressão -->
+<div class="card no-print">
+  <div class="card-hd"><h2>Adicionar pesquisa</h2></div>
+  <div class="card-bd">
+
+    <div class="row cols-3">
+      <div>
+        <label>Nome da parte</label>
+        <input id="nomeParte">
+      </div>
+      <div>
+        <label>CPF / CNPJ</label>
+        <input id="docParte">
+      </div>
+      <div>
+        <label>Situação do CPF/CNPJ</label>
+        <select id="situacaoParte">
+          <option>Não consultado</option>
+          <option>Regular</option>
+          <option>Irregular</option>
+          <option>Inapto</option>
+          <option>Suspenso</option>
+          <option>Baixado</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row cols-5">
+      <div>
+        <label>Tipo de pesquisa</label>
+        <select id="tipo">
+          <option>Certidão</option>
+          <option>Pesquisa prévia</option>
+          <option>Consulta cadastral</option>
+          <option>Investigação Patrimonial Bradesco</option>
+        </select>
+      </div>
+      <div>
+        <label>Site utilizado</label>
+        <select id="site">
+          <option>RI Digital - Registradores</option>
+          <option>E-Cartório</option>
+          <option>Registro Cível</option>
+          <option>Outros</option>
+        </select>
+      </div>
+      <div>
+        <label>Data da consulta</label>
+        <input type="date" id="dataConsulta">
+      </div>
+      <div>
+        <label>Protocolo</label>
+        <input id="protocolo" placeholder="Ex.: 2501061022630">
+      </div>
+      <div>
+        <label>Valor (R$)</label>
+        <input id="valor" placeholder="Ex.: 128,21">
+      </div>
+    </div>
+
+    <div class="row cols-2">
+      <div>
+        <label>Resultado</label>
+        <select id="resultado">
+          <option>Nada localizado</option>
+          <option>Bem localizado</option>
+          <option>Indício de bem</option>
+          <option>Pendente</option>
+        </select>
+      </div>
+      <div>
+        <label>Conclusão</label>
+        <textarea id="conclusao"></textarea>
+      </div>
+    </div>
+
+    <div class="btns">
+      <button class="primary" type="button" onclick="addPesquisa()">Adicionar</button>
+      <button class="danger" type="button" onclick="excluirUltimo()">Excluir último</button>
+      <button class="ghost" type="button" onclick="limparCampos()">Limpar campos</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd">
+    <h2>Pesquisas realizadas</h2>
+    <div class="btns no-print">
+      <button class="primary" type="button" onclick="window.print()">Imprimir formulário</button>
+    </div>
+  </div>
+  <div class="card-bd">
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Parte</th>
+          <th>CPF/CNPJ</th>
+          <th>Situação</th>
+          <th>Tipo</th>
+          <th>Site</th>
+          <th>Data</th>
+          <th>Protocolo</th>
+          <th>Valor</th>
+          <th>Resultado</th>
+          <th>Conclusão</th>
+        </tr>
+      </thead>
+      <tbody id="lista"></tbody>
+    </table>
+
+    <div class="total">
+      <div>Total de pesquisas: <strong id="qtd">0</strong></div>
+      <div>Total gasto: <strong id="total">R$ 0,00</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd"><h2>Observações finais</h2></div>
+  <div class="card-bd">
+    <textarea id="obsFinais" placeholder="Escreva observações gerais, próximos passos, etc."></textarea>
+
+    <div class="footer-note">
+      Salvar como: <strong id="saveAsText">Laudo Pesquisa de Bens</strong>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const pesquisas = [];
+const lista = document.getElementById("lista");
+const qtd = document.getElementById("qtd");
+const total = document.getElementById("total");
+
+function parseBRLToNumber(input){
+  if(!input) return 0;
+  const cleaned = String(input).trim()
+    .replace(/\./g,"")
+    .replace(",",".")
+    .replace(/[^\d.]/g,"");
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function formatNumberToBRL(n){
+  const v = Number.isFinite(n) ? n : 0;
+  return v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+}
+
+function escapeHtml(s){
+  return String(s ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#39;");
+}
+
+function formatDateBR(iso){
+  if(!iso) return "";
+  const parts = iso.split("-");
+  if(parts.length !== 3) return iso;
+  return parts[2] + "/" + parts[1] + "/" + parts[0];
+}
+
+function updateSaveAs(){
+  const g = (document.getElementById("gcpj").value || "").trim();
+  const base = "Laudo Pesquisa de Bens";
+  document.getElementById("saveAsText").textContent = g ? (base + " - " + g) : base + " - Número do GCPJ";
+}
+
+function setDefaultDateIfEmpty(){
+  const el = document.getElementById("dataConsulta");
+  if(!el.value){
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2,"0");
+    const dd = String(d.getDate()).padStart(2,"0");
+    el.value = yyyy + "-" + mm + "-" + dd;
+  }
+}
+
+function addPesquisa(){
+  const parte = nomeParte.value.trim();
+  const doc = docParte.value.trim();
+  const situacao = situacaoParte.value;
+  const tipoV = tipo.value;
+  const siteV = site.value;
+
+  setDefaultDateIfEmpty();
+  const dataV = dataConsulta.value;
+
+  const prot = protocolo.value.trim();
+  const val = parseBRLToNumber(valor.value);
+  const res = resultado.value;
+  const conc = conclusao.value.trim();
+
+  if(!parte){
+    alert("Preencha o nome da parte.");
+    nomeParte.focus();
+    return;
+  }
+  if(!doc){
+    alert("Preencha o CPF/CNPJ.");
+    docParte.focus();
+    return;
+  }
+  if(!dataV){
+    alert("Informe a data da consulta.");
+    dataConsulta.focus();
+    return;
+  }
+
+  pesquisas.push({parte, doc, situacao, tipo: tipoV, site: siteV, data: dataV, protocolo: prot, valor: val, resultado: res, conclusao: conc});
+  render();
+}
+
+function excluirUltimo(){
+  if(pesquisas.length === 0) return;
+  pesquisas.pop();
+  render();
+}
+
+function limparCampos(){
+  nomeParte.value = "";
+  docParte.value = "";
+  situacaoParte.value = "Não consultado";
+  dataConsulta.value = "";
+  protocolo.value = "";
+  valor.value = "";
+  resultado.value = "Nada localizado";
+  conclusao.value = "";
+  setDefaultDateIfEmpty();
+}
+
+function render(){
+  lista.innerHTML = "";
+  let soma = 0;
+
+  pesquisas.forEach((p, i) => {
+    soma += p.valor || 0;
+    lista.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${escapeHtml(p.parte)}</td>
+        <td class="mono">${escapeHtml(p.doc)}</td>
+        <td>${escapeHtml(p.situacao)}</td>
+        <td>${escapeHtml(p.tipo)}</td>
+        <td>${escapeHtml(p.site)}</td>
+        <td class="mono">${escapeHtml(formatDateBR(p.data))}</td>
+        <td class="mono">${escapeHtml(p.protocolo || "")}</td>
+        <td class="mono">${escapeHtml(formatNumberToBRL(p.valor || 0))}</td>
+        <td>${escapeHtml(p.resultado)}</td>
+        <td>${escapeHtml(p.conclusao || "")}</td>
+      </tr>
+    `;
+  });
+
+  qtd.textContent = String(pesquisas.length);
+  total.textContent = formatNumberToBRL(soma);
+}
+
+(function init(){
+  const d = new Date();
+  today.textContent = d.toLocaleDateString("pt-BR");
+
+  updateSaveAs();
+  setDefaultDateIfEmpty();
+  gcpj.addEventListener("input", updateSaveAs);
+})();
+</script>
+
+</body>
+</html>
